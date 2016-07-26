@@ -20,13 +20,17 @@ doInit: function(component, event, helper) {
     // Send action off to be executed
     $A.enqueueAction(action);
 },
-  clickCreateExpense: function(component, event, helper) {
-   // if(helper.validateExpenseForm(component)){
-        // Create the new expense
-        var newExpense = component.get("v.newExpense");
-        helper.createExpense(component, newExpense);
-      
-    }
+ handleCreateExpense: function(component, event, helper) {
+    var newExpense = event.getParam("expense");
+    helper.createExpense(component, newExpense);
+},
+
+    
+    handleUpdateExpense: function(component, event, helper) {
+    var updatedExp = event.getParam("expense");
+    helper.updateExpense(component, updatedExp);
+}
+
 	
 	
 })

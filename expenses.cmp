@@ -1,14 +1,14 @@
 <aura:component controller="ExpensesController">
-    <aura:attribute name="newExpense" type="Expense__c"
-     default="{ 'sobjectType': 'Expense__c',
-                    'Name': '',
-                    'Amount__c': 0,
-                    'Client__c': '',
-                    'Date__c': '',
-                    'Reimbursed__c': false }"/>
+    
 
     <aura:attribute name="expenses" type="Expense__c[]"/>
     <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:handler name="updateExpense" event="c:expensesItemUpdate"
+   action="{!c.handleUpdateExpense}"/>
+    <aura:handler name="createExpense" event="c:expensesItemUpdate"
+    action="{!c.handleCreateExpense}"/>
+
+
 
 	<!-- header -->
     <div class="slds-page-header" role="banner">
@@ -33,65 +33,14 @@
       Add Expense
     </legend>
 
-    <!-- CREATE NEW EXPENSE FORM -->
-    <form class="slds-form--stacked">
+  <!-- NEW EXPENSE FORM -->
+<div class="slds-col slds-col--padded slds-p-top--large">
 
-      <div class="slds-form-element slds-is-required">
-          <div class="slds-form-element__control">
-              <ui:inputText aura:id="expname" label="Expense Name"
-                  class="slds-input"
-                  labelClass="slds-form-element__label"
-                  value="{!v.newExpense.Name}"
-                  required="true"/>
-          </div>
-     </div>
+    <c:expenseForm/>
 
-     <div class="slds-form-element slds-is-required">
-          <div class="slds-form-element__control">
-              <ui:inputNumber aura:id="amount" label="Amount"
-                  class="slds-input"
-                  labelClass="slds-form-element__label"
-                  value="{!v.newExpense.Amount__c}"
-                  required="true"/>
+</div>
+<!-- / NEW EXPENSE FORM -->
 
-          </div>
-      </div>
-
-      <div class="slds-form-element">
-          <div class="slds-form-element__control">
-              <ui:inputText aura:id="client" label="Client"
-                  class="slds-input"
-                  labelClass="slds-form-element__label"
-                  value="{!v.newExpense.Client__c}"
-                  placeholder="ABC Co."/>
-          </div>
-      </div>
-
-      <div class="slds-form-element">
-          <div class="slds-form-element__control">
-              <ui:inputDate aura:id="expdate" label="Expense Date"
-                  class="slds-input"
-                  labelClass="slds-form-element__label"
-                  value="{!v.newExpense.Date__c}"
-                  displayDatePicker="true"/>
-          </div>
-      </div>
-
-      <div class="slds-form-element">
-          <ui:inputCheckbox aura:id="reimbursed" label="Reimbursed?"
-              class="slds-checkbox"
-              labelClass="slds-form-element__label"
-              value="{!v.newExpense.Reimbursed__c}"/>
-        </div>
-
-      <div class="slds-form-element">
-          <ui:button label="Create Expense"
-              class="slds-button slds-button--brand"
-              press="{!c.clickCreateExpense}"/>
-      </div>
-
-    </form>
-    <!-- / CREATE NEW EXPENSE FORM -->
 
   </fieldset>
   <!-- / BOXED AREA -->
@@ -100,5 +49,22 @@
 <!-- / CREATE NEW EXPENSE -->
 
     </div>
-    <c:expenseList expenses="{!v.expenses}" />
+    <div class="slds-grid slds-m-top--large">
+
+        <!-- EXPENSES LIST -->
+        <div class="slds-col slds-col-rule--right slds-p-around--small
+            slds-size--8-of-12">
+            <c:expenseList expenses="{!v.expenses}"/>
+        </div>
+        <!-- / EXPENSES LIST -->
+
+        <!-- SOMETHING COOL -->
+        <div class="slds-col slds-p-left--large slds-size--4-of-12">
+            <!-- Bonus lesson, coming in July.
+                 Watch this space for details. -->
+        </div>
+        <!-- / SOMETHING COOL -->
+
+    </div>
+    <!-- / EXISTING EXPENSES -->
 </aura:component>
